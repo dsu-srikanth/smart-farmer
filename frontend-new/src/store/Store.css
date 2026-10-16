@@ -1,0 +1,253 @@
+/* =====================================================
+   GLOBAL RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f8f3;
+    color: #333;
+  }
+  
+  
+  /* =====================================================
+     STORE PAGE
+  ===================================================== */
+  
+  .store-page {
+    min-height: 100vh;
+  
+    padding: 40px 6%;
+  
+    background: #f4f8f3;
+  }
+  
+  
+  /* =====================================================
+     STORE HEADER
+  ===================================================== */
+  
+  .store-page h1 {
+    text-align: center;
+  
+    color: #1b4332;
+  
+    font-size: 34px;
+  
+    margin-bottom: 10px;
+  }
+  
+  .store-page > p {
+    text-align: center;
+  
+    color: #666;
+  
+    font-size: 17px;
+  
+    margin-bottom: 40px;
+  }
+  
+  
+  /* =====================================================
+     STORE CONTAINER
+  ===================================================== */
+  
+  .store-container {
+    max-width: 1200px;
+  
+    margin: 0 auto;
+  
+    display: grid;
+  
+    grid-template-columns: repeat(3, 1fr);
+  
+    gap: 25px;
+  }
+  
+  
+  /* =====================================================
+     STORE CARD
+  ===================================================== */
+  
+  .store-card {
+    background: white;
+  
+    padding: 28px;
+  
+    border-radius: 14px;
+  
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  
+    transition: 0.3s;
+  
+    border: 1px solid #e5eee8;
+  }
+  
+  .store-card:hover {
+    transform: translateY(-7px);
+  
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  
+  /* =====================================================
+     STORE NAME
+  ===================================================== */
+  
+  .store-card h2 {
+    color: #2d6a4f;
+  
+    font-size: 22px;
+  
+    margin-bottom: 20px;
+  }
+  
+  
+  /* =====================================================
+     STORE INFORMATION
+  ===================================================== */
+  
+  .store-card p {
+    color: #555;
+  
+    font-size: 15px;
+  
+    line-height: 1.6;
+  
+    margin-bottom: 12px;
+  }
+  
+  
+  /* =====================================================
+     PRODUCT
+  ===================================================== */
+  
+  .store-card p:nth-of-type(3) {
+    color: #1b4332;
+  
+    font-weight: bold;
+  }
+  
+  
+  /* =====================================================
+     PRICE
+  ===================================================== */
+  
+  .store-card p:nth-of-type(4) {
+    color: #2d6a4f;
+  
+    font-size: 18px;
+  
+    font-weight: bold;
+  }
+  
+  
+  /* =====================================================
+     VIEW STORE BUTTON
+  ===================================================== */
+  
+  .store-card button {
+    width: 100%;
+  
+    margin-top: 15px;
+  
+    padding: 12px 20px;
+  
+    border: none;
+  
+    border-radius: 7px;
+  
+    background: #40916c;
+  
+    color: white;
+  
+    font-size: 15px;
+  
+    font-weight: bold;
+  
+    cursor: pointer;
+  
+    transition: 0.3s;
+  }
+  
+  .store-card button:hover {
+    background: #1b4332;
+  
+    transform: translateY(-2px);
+  }
+  
+  
+  /* =====================================================
+     EMPTY STORE MESSAGE
+  ===================================================== */
+  
+  .store-container:empty::after {
+    content: "No stores available";
+  
+    display: block;
+  
+    grid-column: 1 / -1;
+  
+    text-align: center;
+  
+    padding: 40px;
+  
+    color: #777;
+  
+    font-size: 18px;
+  }
+  
+  
+  /* =====================================================
+     TABLET
+  ===================================================== */
+  
+  @media (max-width: 1000px) {
+  
+    .store-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+  }
+  
+  
+  /* =====================================================
+     MOBILE
+  ===================================================== */
+  
+  @media (max-width: 650px) {
+  
+    .store-page {
+      padding: 30px 20px;
+    }
+  
+    .store-page h1 {
+      font-size: 28px;
+    }
+  
+    .store-page > p {
+      font-size: 15px;
+  
+      margin-bottom: 30px;
+    }
+  
+    .store-container {
+      grid-template-columns: 1fr;
+  
+      gap: 20px;
+    }
+  
+    .store-card {
+      padding: 25px 20px;
+    }
+  
+    .store-card h2 {
+      font-size: 20px;
+    }
+  
+  }

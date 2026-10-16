@@ -1,0 +1,410 @@
+/* =====================================================
+   GLOBAL RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  
+    background-color: #f4f8f3;
+  
+    color: #333;
+  }
+  
+  
+  /* =====================================================
+     ADMIN STORE PAGE
+  ===================================================== */
+  
+  .admin-stores-page {
+    min-height: 100vh;
+  
+    padding: 40px 6%;
+  
+    background-color: #f4f8f3;
+  }
+  
+  
+  /* =====================================================
+     HEADER
+  ===================================================== */
+  
+  .admin-store-header {
+    max-width: 1200px;
+  
+    margin: 0 auto 35px;
+  
+    display: flex;
+  
+    align-items: center;
+  
+    justify-content: space-between;
+  
+    gap: 20px;
+  }
+  
+  
+  /* =====================================================
+     HEADER TITLE
+  ===================================================== */
+  
+  .admin-store-header h1 {
+    color: #1b4332;
+  
+    font-size: 32px;
+  }
+  
+  
+  /* =====================================================
+     DASHBOARD BUTTON
+  ===================================================== */
+  
+  .admin-store-header button {
+    padding: 11px 20px;
+  
+    border: none;
+  
+    border-radius: 7px;
+  
+    background-color: #2d6a4f;
+  
+    color: white;
+  
+    font-size: 14px;
+  
+    font-weight: bold;
+  
+    cursor: pointer;
+  
+    transition: 0.3s;
+  }
+  
+  .admin-store-header button:hover {
+    background-color: #1b4332;
+  
+    transform: translateY(-2px);
+  }
+  
+  
+  /* =====================================================
+     ADD STORE SECTION
+  ===================================================== */
+  
+  .add-store-section {
+    max-width: 900px;
+  
+    margin: 0 auto 55px;
+  
+    padding: 35px;
+  
+    background-color: white;
+  
+    border-radius: 15px;
+  
+    box-shadow:
+      0 5px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  
+  /* =====================================================
+     ADD STORE TITLE
+  ===================================================== */
+  
+  .add-store-section h2 {
+    text-align: center;
+  
+    color: #1b4332;
+  
+    font-size: 25px;
+  
+    margin-bottom: 30px;
+  }
+  
+  
+  /* =====================================================
+     FORM
+  ===================================================== */
+  
+  .store-form {
+    display: grid;
+  
+    grid-template-columns: repeat(2, 1fr);
+  
+    gap: 18px;
+  }
+  
+  
+  /* =====================================================
+     INPUT
+  ===================================================== */
+  
+  .store-form input {
+    width: 100%;
+  
+    padding: 13px 14px;
+  
+    border: 1px solid #ccd8d0;
+  
+    border-radius: 7px;
+  
+    outline: none;
+  
+    font-size: 15px;
+  
+    background-color: #fafafa;
+  
+    transition: 0.3s;
+  }
+  
+  
+  /* =====================================================
+     INPUT FOCUS
+  ===================================================== */
+  
+  .store-form input:focus {
+    border-color: #40916c;
+  
+    background-color: white;
+  
+    box-shadow:
+      0 0 0 3px rgba(64, 145, 108, 0.12);
+  }
+  
+  
+  /* =====================================================
+     ADD BUTTON
+  ===================================================== */
+  
+  .store-form button {
+    grid-column: 1 / -1;
+  
+    padding: 13px;
+  
+    border: none;
+  
+    border-radius: 7px;
+  
+    background-color: #40916c;
+  
+    color: white;
+  
+    font-size: 15px;
+  
+    font-weight: bold;
+  
+    cursor: pointer;
+  
+    transition: 0.3s;
+  }
+  
+  .store-form button:hover {
+    background-color: #1b4332;
+  
+    transform: translateY(-2px);
+  }
+  
+  
+  /* =====================================================
+     MESSAGE
+  ===================================================== */
+  
+  .message {
+    margin-top: 20px;
+  
+    padding: 12px;
+  
+    border-radius: 7px;
+  
+    text-align: center;
+  
+    background-color: #d8f3dc;
+  
+    color: #1b4332;
+  
+    font-weight: bold;
+  }
+  
+  
+  /* =====================================================
+     ALL STORES SECTION
+  ===================================================== */
+  
+  .all-stores {
+    max-width: 1200px;
+  
+    margin: 0 auto;
+  }
+  
+  
+  /* =====================================================
+     ALL STORES TITLE
+  ===================================================== */
+  
+  .all-stores h2 {
+    text-align: center;
+  
+    color: #1b4332;
+  
+    font-size: 28px;
+  
+    margin-bottom: 30px;
+  }
+  
+  
+  /* =====================================================
+     STORE GRID
+  ===================================================== */
+  
+  .stores-grid {
+    display: grid;
+  
+    grid-template-columns: repeat(3, 1fr);
+  
+    gap: 25px;
+  }
+  
+  
+  /* =====================================================
+     STORE CARD
+  ===================================================== */
+  
+  .admin-store-card {
+    padding: 28px;
+  
+    background-color: white;
+  
+    border-radius: 14px;
+  
+    border: 1px solid #e5eee8;
+  
+    box-shadow:
+      0 5px 18px rgba(0, 0, 0, 0.08);
+  
+    transition: 0.3s;
+  }
+  
+  .admin-store-card:hover {
+    transform: translateY(-6px);
+  
+    box-shadow:
+      0 9px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  
+  /* =====================================================
+     STORE TITLE
+  ===================================================== */
+  
+  .admin-store-card h3 {
+    color: #2d6a4f;
+  
+    font-size: 21px;
+  
+    margin-bottom: 18px;
+  }
+  
+  
+  /* =====================================================
+     STORE INFORMATION
+  ===================================================== */
+  
+  .admin-store-card p {
+    color: #555;
+  
+    font-size: 15px;
+  
+    line-height: 1.6;
+  
+    margin-bottom: 12px;
+  }
+  
+  .admin-store-card strong {
+    color: #1b4332;
+  }
+  
+  
+  /* =====================================================
+     NO STORES
+  ===================================================== */
+  
+  .no-stores {
+    grid-column: 1 / -1;
+  
+    padding: 40px;
+  
+    text-align: center;
+  
+    color: #777;
+  
+    background-color: white;
+  
+    border-radius: 12px;
+  
+    box-shadow:
+      0 4px 15px rgba(0, 0, 0, 0.06);
+  }
+  
+  
+  /* =====================================================
+     TABLET
+  ===================================================== */
+  
+  @media (max-width: 1000px) {
+  
+    .stores-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+  }
+  
+  
+  /* =====================================================
+     MOBILE
+  ===================================================== */
+  
+  @media (max-width: 700px) {
+  
+    .admin-stores-page {
+      padding: 30px 20px;
+    }
+  
+    .admin-store-header {
+      flex-direction: column;
+  
+      text-align: center;
+    }
+  
+    .admin-store-header h1 {
+      font-size: 27px;
+    }
+  
+    .add-store-section {
+      padding: 25px 20px;
+    }
+  
+    .add-store-section h2 {
+      font-size: 22px;
+    }
+  
+    .store-form {
+      grid-template-columns: 1fr;
+    }
+  
+    .store-form button {
+      grid-column: auto;
+    }
+  
+    .stores-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .admin-store-card {
+      padding: 25px 20px;
+    }
+  
+  }

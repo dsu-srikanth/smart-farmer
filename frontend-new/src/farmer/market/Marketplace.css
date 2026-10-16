@@ -1,0 +1,603 @@
+
+/* ========================================
+   GLOBAL MARKETPLACE STYLES
+======================================== */
+
+.marketplace-page {
+  min-height: 100vh;
+  padding: 25px 5%;
+  background: #f4f8f4;
+  color: #26372b;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ========================================
+   HEADER
+======================================== */
+
+.marketplace-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 30px;
+  margin-bottom: 30px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #14532d, #22a447);
+  color: white;
+  box-shadow: 0 8px 25px rgba(20, 83, 45, 0.15);
+}
+
+.marketplace-header h1 {
+  margin-bottom: 12px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.marketplace-header p {
+  max-width: 650px;
+  color: #e5f8e9;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.marketplace-refresh {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  color: #166534;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.marketplace-refresh:hover:not(:disabled) {
+  background: #dcfce7;
+  transform: translateY(-2px);
+}
+
+.marketplace-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   SEARCH AND FILTERS
+======================================== */
+
+.marketplace-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.marketplace-search {
+  flex: 1;
+  min-width: 250px;
+  max-width: 550px;
+  padding: 15px 18px;
+  border: 1px solid #d3e3d6;
+  border-radius: 10px;
+  outline: none;
+  background: white;
+  color: #26372b;
+  font-size: 15px;
+  transition: 0.3s ease;
+}
+
+.marketplace-search::placeholder {
+  color: #91a096;
+}
+
+.marketplace-search:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+}
+
+.marketplace-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.marketplace-filters button {
+  padding: 11px 17px;
+  border: 1px solid #cfe0d2;
+  border-radius: 8px;
+  background: white;
+  color: #35513b;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.marketplace-filters button:hover {
+  border-color: #15803d;
+  color: #15803d;
+}
+
+.marketplace-filters button.active {
+  border-color: #15803d;
+  background: #15803d;
+  color: white;
+}
+
+/* ========================================
+   RESULTS HEADING
+======================================== */
+
+.marketplace-results {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.marketplace-results h2 {
+  color: #14532d;
+  font-size: 23px;
+}
+
+.marketplace-results span {
+  padding: 8px 13px;
+  border-radius: 20px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* ========================================
+   PRODUCT GRID
+======================================== */
+
+.marketplace-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+  align-items: stretch;
+}
+
+/* ========================================
+   PRODUCT CARD
+======================================== */
+
+.marketplace-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #e0ebe2;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 5px 18px rgba(20, 83, 45, 0.06);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.marketplace-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(20, 83, 45, 0.12);
+}
+
+/* Card top */
+
+.marketplace-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.marketplace-product-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: #e8f7eb;
+  font-size: 32px;
+}
+
+/* Listing badge */
+
+.marketplace-badge {
+  display: inline-block;
+  padding: 8px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.sell-badge {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.buy-badge {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* Product name */
+
+.marketplace-card h3 {
+  margin-bottom: 8px;
+  color: #14532d;
+  font-size: 21px;
+  overflow-wrap: anywhere;
+}
+
+.marketplace-category {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 18px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #f0fdf4;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Product information */
+
+.marketplace-product-details {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.marketplace-product-details p {
+  margin-bottom: 12px;
+  color: #68776c;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.marketplace-product-details strong {
+  color: #344c39;
+}
+
+/* Price */
+
+.marketplace-price {
+  margin-bottom: 20px;
+  padding: 14px;
+  border-radius: 9px;
+  background: #f0fdf4;
+  color: #15803d;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+/* ========================================
+   CONTACT BUTTONS
+======================================== */
+
+.marketplace-contact-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: auto;
+}
+
+.marketplace-contact-buttons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 11px 8px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+  transition: 0.3s ease;
+  overflow-wrap: anywhere;
+}
+
+.marketplace-call-button {
+  background: #2563eb;
+}
+
+.marketplace-call-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.marketplace-whatsapp-button {
+  background: #25d366;
+}
+
+.marketplace-whatsapp-button:hover {
+  background: #128c7e;
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   LOADING, ERROR AND EMPTY STATES
+======================================== */
+
+.marketplace-message {
+  padding: 60px 20px;
+  color: #64746a;
+  text-align: center;
+  font-size: 17px;
+}
+
+.marketplace-error {
+  padding: 25px;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  background: #fef2f2;
+  color: #991b1b;
+  text-align: center;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.marketplace-error button {
+  margin-top: 15px;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 7px;
+  background: #dc2626;
+  color: white;
+  font-weight: bold;
+}
+
+.marketplace-error button:hover {
+  background: #b91c1c;
+}
+
+.marketplace-empty {
+  padding: 70px 20px;
+  border: 1px dashed #c8d9cc;
+  border-radius: 15px;
+  background: white;
+  text-align: center;
+}
+
+.marketplace-empty span {
+  font-size: 50px;
+}
+
+.marketplace-empty h3 {
+  margin: 15px 0 10px;
+  color: #14532d;
+  font-size: 22px;
+}
+
+.marketplace-empty p {
+  color: #78867c;
+  font-size: 14px;
+}
+
+/* ========================================
+   FLOATING WHATSAPP BUTTON
+======================================== */
+
+.marketplace-whatsapp-float {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 62px;
+  height: 62px;
+
+  border: none;
+  border-radius: 50%;
+  background: #25d366;
+  color: white;
+
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.22);
+  text-decoration: none;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.marketplace-whatsapp-float > span:first-child {
+  font-size: 37px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.marketplace-whatsapp-float:hover {
+  transform: scale(1.1);
+  background: #128c7e;
+  color: white;
+}
+
+/* Tooltip */
+
+.marketplace-whatsapp-tooltip {
+  position: absolute;
+  right: 72px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: max-content;
+  max-width: 180px;
+  padding: 10px 14px;
+
+  border-radius: 8px;
+  background: #24332a;
+  color: white;
+
+  font-size: 13px;
+  opacity: 0;
+  visibility: hidden;
+
+  transition: opacity 0.2s ease;
+}
+
+.marketplace-whatsapp-float:hover
+.marketplace-whatsapp-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.marketplace-footer {
+  margin-top: 55px;
+  padding: 35px 20px;
+  border-radius: 15px;
+  background: #14532d;
+  color: white;
+  text-align: center;
+}
+
+.marketplace-footer h3 {
+  margin-bottom: 12px;
+  font-size: 23px;
+}
+
+.marketplace-footer p {
+  margin-top: 10px;
+  color: #d1fae5;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ========================================
+   TABLET RESPONSIVENESS
+======================================== */
+
+@media (max-width: 1100px) {
+  .marketplace-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .marketplace-page {
+    padding: 22px 3%;
+  }
+
+  .marketplace-header h1 {
+    font-size: 27px;
+  }
+}
+
+/* ========================================
+   MOBILE RESPONSIVENESS
+======================================== */
+
+@media (max-width: 650px) {
+  .marketplace-page {
+    padding: 15px;
+  }
+
+  .marketplace-header {
+    padding: 22px 18px;
+    border-radius: 13px;
+  }
+
+  .marketplace-header h1 {
+    font-size: 23px;
+    line-height: 1.4;
+  }
+
+  .marketplace-header p {
+    font-size: 14px;
+  }
+
+  .marketplace-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .marketplace-search {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .marketplace-filters {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .marketplace-filters button {
+    padding: 10px 5px;
+    font-size: 12px;
+  }
+
+  .marketplace-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .marketplace-card {
+    padding: 20px;
+  }
+
+  .marketplace-results h2 {
+    font-size: 20px;
+  }
+
+  .marketplace-contact-buttons a {
+    font-size: 12px;
+  }
+
+  .marketplace-whatsapp-float {
+    right: 16px;
+    bottom: 16px;
+    width: 55px;
+    height: 55px;
+  }
+
+  .marketplace-whatsapp-float > span:first-child {
+    font-size: 32px;
+  }
+
+  .marketplace-whatsapp-tooltip {
+    display: none;
+  }
+
+  .marketplace-footer {
+    margin-top: 35px;
+    padding: 28px 15px;
+  }
+}
+
+/* ========================================
+   SMALL MOBILE SCREENS
+======================================== */
+
+@media (max-width: 360px) {
+  .marketplace-contact-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .marketplace-card h3 {
+    font-size: 19px;
+  }
+
+  .marketplace-filters {
+    grid-template-columns: 1fr;
+  }
+}

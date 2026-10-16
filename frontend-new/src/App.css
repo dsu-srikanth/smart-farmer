@@ -1,0 +1,1262 @@
+/* ========================================
+   GLOBAL STYLES
+======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+  width: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f8f1;
+  color: #26352a;
+  line-height: 1.6;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input,
+select,
+textarea {
+  outline: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* ========================================
+   APP CONTAINER
+======================================== */
+
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ========================================
+   COMMON BUTTONS
+======================================== */
+
+.btn-primary {
+  background: #27803b;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background: #1c642d;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: #e8f3e7;
+  color: #276b35;
+  border: 1px solid #cfe4ce;
+  padding: 12px 22px;
+  border-radius: 8px;
+}
+
+.btn-secondary:hover {
+  background: #d8ead6;
+}
+
+/* ========================================
+   COMMON CONTAINERS
+======================================== */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 25px;
+}
+
+.page-title {
+  color: #205c31;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.page-description {
+  color: #6b786d;
+  margin-bottom: 25px;
+}
+
+/* ========================================
+   COMMON CARDS
+======================================== */
+
+.card {
+  background: white;
+  padding: 22px;
+  border: 1px solid #e0e9dd;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(25, 60, 30, 0.05);
+}
+
+.card h2,
+.card h3 {
+  color: #265f32;
+}
+
+/* ========================================
+   FORMS
+======================================== */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  color: #344638;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d5dfd3;
+  border-radius: 8px;
+  background: white;
+  color: #26352a;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #388b49;
+  box-shadow: 0 0 0 3px rgba(56, 139, 73, 0.12);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ========================================
+   LOGIN AND SIGNUP
+======================================== */
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  background: linear-gradient(135deg, #e8f5e7, #f8fbf6);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  padding: 35px;
+  background: white;
+  border: 1px solid #e1eadf;
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(35, 85, 42, 0.1);
+}
+
+.auth-card h1 {
+  text-align: center;
+  color: #246333;
+  margin-bottom: 10px;
+}
+
+.auth-card button {
+  width: 100%;
+  padding: 13px;
+  background: #27803b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.auth-card button:hover {
+  background: #1c642d;
+}
+
+.auth-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #27803b;
+}
+
+/* ========================================
+   FARMER DASHBOARD
+======================================== */
+
+.dashboard-container {
+  padding: 30px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  color: #205c31;
+  font-size: 30px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.dashboard-card {
+  padding: 24px;
+  background: white;
+  border: 1px solid #e0e9dd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(25, 60, 30, 0.05);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+}
+
+.dashboard-card h3 {
+  color: #28713a;
+}
+
+/* ========================================
+   CROPS PAGE
+======================================== */
+
+.crops-page {
+  min-height: 100vh;
+  padding: 30px;
+  background: #f4f8f2;
+}
+
+.crops-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.crops-header h1 {
+  color: #205c31;
+  font-size: 32px;
+}
+
+.crops-subtitle {
+  color: #38864a;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.crops-description {
+  color: #6b786d;
+  margin-top: 8px;
+}
+
+.crops-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+  background: white;
+  border: 1px solid #e0e9dd;
+  border-radius: 12px;
+}
+
+.summary-icon {
+  font-size: 32px;
+}
+
+.summary-card h2 {
+  color: #26723a;
+  font-size: 27px;
+}
+
+.summary-card p {
+  color: #718073;
+  font-size: 14px;
+}
+
+.crop-form-section,
+.crop-list-section {
+  padding: 26px;
+  margin-bottom: 30px;
+  background: white;
+  border: 1px solid #e0e9dd;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(25, 60, 30, 0.04);
+}
+
+.crop-form-section h2,
+.crop-list-section h2 {
+  color: #235f32;
+}
+
+.crop-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.crop-form .form-group {
+  margin-bottom: 0;
+}
+
+.form-buttons {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+}
+
+.add-crop-button {
+  padding: 13px 20px;
+  background: #27803b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.add-crop-button:hover {
+  background: #1c642d;
+}
+
+.reset-button {
+  padding: 13px 20px;
+  background: #edf1ec;
+  color: #455448;
+  border: none;
+  border-radius: 8px;
+}
+
+.crop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.crop-card {
+  padding: 20px;
+  background: #fbfef9;
+  border: 1px solid #e1e9dd;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+
+.crop-card:hover {
+  transform: translateY(-4px);
+}
+
+.crop-card h3 {
+  color: #265f32;
+  margin-bottom: 15px;
+}
+
+.crop-details p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e8eee5;
+  font-size: 13px;
+}
+
+/* ========================================
+   MARKETPLACE
+======================================== */
+
+.marketplace-container {
+  padding: 30px;
+}
+
+.marketplace-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.marketplace-header h1 {
+  color: #205c31;
+}
+
+.marketplace-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.product-card {
+  overflow: hidden;
+  background: white;
+  border: 1px solid #e0e9dd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(25, 60, 30, 0.05);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product-card-content {
+  padding: 20px;
+}
+
+.product-card h3 {
+  color: #265f32;
+}
+
+.product-price {
+  color: #247638;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.product-card button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background: #27803b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+.product-card button:hover {
+  background: #1c642d;
+}
+
+/* ========================================
+   ADMIN DASHBOARD
+======================================== */
+
+.admin-dashboard {
+  min-height: 100vh;
+  padding: 30px;
+  background: #f4f8f2;
+}
+
+.admin-dashboard h1 {
+  color: #205c31;
+  margin-bottom: 20px;
+}
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.admin-stat-card {
+  padding: 22px;
+  background: white;
+  border: 1px solid #e0e9dd;
+  border-radius: 12px;
+}
+
+.admin-stat-card h3 {
+  color: #6b786d;
+  font-size: 14px;
+}
+
+.admin-stat-card p {
+  color: #26723a;
+  font-size: 27px;
+  font-weight: bold;
+}
+
+/* ========================================
+   TABLES
+======================================== */
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+  border: 1px solid #e0e9dd;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #e8f3e7;
+}
+
+th,
+td {
+  padding: 14px;
+  border-bottom: 1px solid #e8eee5;
+  text-align: left;
+}
+
+th {
+  color: #265f32;
+}
+
+td {
+  color: #465449;
+}
+
+tbody tr:hover {
+  background: #f7fbf5;
+}
+
+/* ========================================
+   SUCCESS AND ERROR MESSAGES
+======================================== */
+
+.success-message {
+  padding: 13px;
+  margin-top: 15px;
+  color: #216b30;
+  background: #e8f7e9;
+  border-radius: 8px;
+}
+
+.error-message {
+  padding: 13px;
+  margin-top: 15px;
+  color: #a12c26;
+  background: #fff0ef;
+  border-radius: 8px;
+}
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.footer {
+  padding: 25px;
+  background: #174b27;
+  color: white;
+  text-align: center;
+}
+
+.footer p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 1000px) {
+  .dashboard-grid,
+  .crop-grid,
+  .marketplace-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .container,
+  .dashboard-container,
+  .marketplace-container,
+  .admin-dashboard,
+  .crops-page {
+    padding: 16px;
+  }
+
+  .dashboard-grid,
+  .crops-summary,
+  .crop-grid,
+  .marketplace-grid,
+  .crop-form {
+    grid-template-columns: 1fr;
+  }
+
+  .crops-header,
+  .dashboard-header,
+  .marketplace-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .crops-header h1,
+  .dashboard-header h1 {
+    font-size: 26px;
+  }
+
+  .crop-form-section,
+  .crop-list-section {
+    padding: 18px;
+  }
+
+  .form-buttons {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-card {
+    padding: 25px;
+  }
+}
+
+@media (max-width: 400px) {
+  .auth-container {
+    padding: 12px;
+  }
+
+  .auth-card {
+    padding: 20px;
+  }
+
+  .form-buttons button {
+    width: 100%;
+  }
+}
+
+/* ========================================
+   LIVE WEATHER FORECASTING
+======================================== */
+
+.weather-page {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 30px;
+  color: #26352a;
+}
+
+.weather-page * {
+  box-sizing: border-box;
+}
+
+.weather-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 30px;
+  margin-bottom: 24px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #176b43, #43a66b);
+  color: #fff;
+}
+
+.weather-header h1 {
+  margin: 8px 0;
+  color: #fff;
+  font-size: 32px;
+}
+
+.weather-header p {
+  margin: 8px 0 0;
+  line-height: 1.6;
+}
+
+.weather-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.weather-header-icon {
+  font-size: 65px;
+}
+
+.weather-search-card {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+  border: 1px solid #e0e9dd;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(25, 60, 30, 0.05);
+}
+
+.weather-search-form {
+  display: flex;
+  flex: 1 1 300px;
+  gap: 10px;
+}
+
+.weather-search-form input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #d5dfd3;
+  border-radius: 8px;
+  background: #fff;
+  color: #26352a;
+}
+
+.weather-search-form input:focus {
+  border-color: #388b49;
+  box-shadow: 0 0 0 3px rgba(56, 139, 73, 0.12);
+}
+
+.weather-search-card button {
+  padding: 12px 17px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.weather-search-form button {
+  flex-shrink: 0;
+  background: #27803b;
+  color: #fff;
+}
+
+.weather-search-form button:hover {
+  background: #1c642d;
+}
+
+.weather-search-card .location-button {
+  background: #e8f3e7;
+  color: #276b35;
+}
+
+.weather-search-card .location-button:hover {
+  background: #d8ead6;
+}
+
+.weather-search-card .refresh-button {
+  background: #edf1ec;
+  color: #455448;
+}
+
+.weather-search-card .refresh-button:hover {
+  background: #e0e8de;
+}
+
+.weather-search-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Current weather */
+
+.current-weather-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 25px;
+  padding: 30px;
+  margin-bottom: 30px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #164e63, #2786a3);
+  color: #fff;
+  box-shadow: 0 8px 25px rgba(22, 78, 99, 0.12);
+}
+
+.current-weather-main {
+  min-width: 0;
+}
+
+.current-weather-main .weather-location {
+  font-size: 16px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.current-weather-main .weather-condition {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.current-temperature {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 15px 0;
+  font-size: 55px;
+  font-weight: 700;
+}
+
+.current-weather-main .feels-like {
+  font-size: 15px;
+}
+
+.current-weather-main .updated-time {
+  margin-top: 20px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* Weather details */
+
+.current-weather-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: center;
+  gap: 15px;
+}
+
+.weather-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 18px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.weather-stat > span {
+  font-size: 25px;
+}
+
+.weather-stat p {
+  margin: 0 0 7px;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.weather-stat strong {
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+/* Seven-day forecast */
+
+.forecast-section,
+.farming-section {
+  margin-bottom: 35px;
+}
+
+.weather-page .section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.weather-page .section-heading h2 {
+  margin: 0 0 8px;
+  color: #205c31;
+  font-size: 23px;
+}
+
+.weather-page .section-heading p {
+  margin: 0;
+  color: #6b786d;
+  line-height: 1.5;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.forecast-card {
+  min-width: 0;
+  padding: 20px 15px;
+  border: 1px solid #e0e9dd;
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(25, 60, 30, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.forecast-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(30, 70, 45, 0.1);
+}
+
+.forecast-day {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.forecast-icon {
+  margin: 15px 0;
+  font-size: 38px;
+}
+
+.forecast-description {
+  min-height: 34px;
+  color: #6b786d;
+  font-size: 13px;
+}
+
+.forecast-temperatures {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.forecast-temperatures strong {
+  color: #26352a;
+  font-size: 20px;
+}
+
+.forecast-temperatures span {
+  color: #829087;
+  font-size: 18px;
+}
+
+.forecast-rain {
+  padding: 9px;
+  border-radius: 8px;
+  background: #eaf5fb;
+  color: #176b8a;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.forecast-rainfall {
+  margin-bottom: 0;
+  color: #6b786d;
+  font-size: 12px;
+}
+
+/* Farming recommendations */
+
+.farming-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.advice-card {
+  padding: 22px;
+  border: 1px solid #dce8df;
+  border-left: 5px solid #3c9660;
+  border-radius: 12px;
+  background: #f4faf5;
+}
+
+.advice-card h3 {
+  margin: 0 0 10px;
+  color: #265f32;
+  font-size: 17px;
+}
+
+.advice-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.advice-warning {
+  border-left-color: #e8a12a;
+  background: #fff9eb;
+}
+
+.advice-info {
+  border-left-color: #3885c5;
+  background: #f0f7ff;
+}
+
+.advice-success {
+  border-left-color: #3c9660;
+  background: #f4faf5;
+}
+
+.farming-disclaimer {
+  margin-top: 20px;
+  color: #6b786d;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* Loading and error states */
+
+.weather-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 150px;
+  color: #176b43;
+}
+
+.weather-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #d5e9db;
+  border-top-color: #187344;
+  border-radius: 50%;
+  animation: weather-spin 0.8s linear infinite;
+}
+
+@keyframes weather-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.weather-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #f2c3c3;
+  border-radius: 10px;
+  background: #fff0ef;
+  color: #a12c26;
+}
+
+.weather-error button {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 7px;
+  background: #a12c26;
+  color: #fff;
+}
+
+.weather-error button:hover {
+  background: #821f1a;
+}
+
+/* ========================================
+   WEATHER RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 1000px) {
+  .dashboard-grid,
+  .crop-grid,
+  .marketplace-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .forecast-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .current-weather-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .container,
+  .dashboard-container,
+  .marketplace-container,
+  .admin-dashboard,
+  .crops-page,
+  .weather-page {
+    padding: 16px;
+  }
+
+  .dashboard-grid,
+  .crops-summary,
+  .crop-grid,
+  .marketplace-grid,
+  .crop-form {
+    grid-template-columns: 1fr;
+  }
+
+  .crops-header,
+  .dashboard-header,
+  .marketplace-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .crops-header h1,
+  .dashboard-header h1 {
+    font-size: 26px;
+  }
+
+  .crop-form-section,
+  .crop-list-section {
+    padding: 18px;
+  }
+
+  .form-buttons {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-card {
+    padding: 25px;
+  }
+
+  .weather-header {
+    padding: 22px;
+  }
+
+  .weather-header h1 {
+    font-size: 26px;
+  }
+
+  .weather-header-icon {
+    font-size: 42px;
+  }
+
+  .weather-search-form {
+    flex-basis: 100%;
+  }
+
+  .weather-search-card button {
+    padding: 11px 13px;
+  }
+
+  .current-weather-card {
+    padding: 20px;
+  }
+
+  .current-temperature {
+    font-size: 42px;
+  }
+
+  .current-weather-details {
+    gap: 10px;
+  }
+
+  .weather-stat {
+    padding: 12px 8px;
+    gap: 8px;
+  }
+
+  .weather-stat > span {
+    font-size: 20px;
+  }
+
+  .weather-stat strong {
+    font-size: 13px;
+  }
+
+  .forecast-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .farming-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .auth-container {
+    padding: 12px;
+  }
+
+  .auth-card {
+    padding: 20px;
+  }
+
+  .form-buttons button {
+    width: 100%;
+  }
+
+  .weather-header {
+    padding: 17px;
+  }
+
+  .weather-header h1 {
+    font-size: 22px;
+  }
+
+  .weather-header-icon {
+    font-size: 34px;
+  }
+
+  .weather-search-card {
+    padding: 14px;
+  }
+
+  .weather-search-form {
+    flex-direction: column;
+  }
+
+  .weather-search-form button {
+    width: 100%;
+  }
+
+  .current-weather-details {
+    grid-template-columns: 1fr;
+  }
+}

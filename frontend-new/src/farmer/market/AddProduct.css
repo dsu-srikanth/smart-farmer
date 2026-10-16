@@ -1,0 +1,204 @@
+
+/* Main page */
+
+.add-product-page {
+  min-height: 100vh;
+  padding: 30px 16px;
+  background: linear-gradient(135deg, #edf8e9, #f8fff5);
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.add-product-container {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+/* Back button */
+
+.add-product-back {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  background: #ffffff;
+  color: #236b35;
+  border: 1px solid #c8dfc9;
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-product-back:hover {
+  background: #236b35;
+  color: white;
+}
+
+/* Heading */
+
+.add-product-heading {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.add-product-heading h1 {
+  color: #236b35;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.add-product-heading p {
+  color: #586b58;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Form */
+
+.add-product-form {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(31, 91, 40, 0.12);
+}
+
+.add-product-form h2 {
+  margin: 0 0 24px;
+  color: #236b35;
+  font-size: 24px;
+  text-align: center;
+}
+
+/* Form fields */
+
+.add-product-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+.add-product-field label {
+  margin-bottom: 8px;
+  color: #263d29;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.add-product-field input,
+.add-product-field select,
+.add-product-field textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd8ca;
+  border-radius: 7px;
+  font-size: 14px;
+  background: #ffffff;
+  color: #253328;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.add-product-field input:focus,
+.add-product-field select:focus,
+.add-product-field textarea:focus {
+  border-color: #318348;
+  box-shadow: 0 0 0 3px rgba(49, 131, 72, 0.12);
+}
+
+.add-product-field textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+/* Quantity and unit row */
+
+.add-product-row {
+  display: flex;
+  gap: 18px;
+}
+
+.add-product-row .add-product-field {
+  width: 50%;
+}
+
+/* Submit button */
+
+.add-product-submit {
+  width: 100%;
+  padding: 15px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #287b3d;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.add-product-submit:hover:not(:disabled) {
+  background: #19572a;
+  transform: translateY(-2px);
+}
+
+.add-product-submit:disabled {
+  background: #91b99a;
+  cursor: not-allowed;
+}
+
+/* Success and error messages */
+
+.add-product-message {
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 7px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.add-product-message.success {
+  background: #e4f6e7;
+  color: #1b6c2b;
+  border: 1px solid #b6e1bd;
+}
+
+.add-product-message.error {
+  background: #fff0f0;
+  color: #b3261e;
+  border: 1px solid #f0c3c3;
+}
+
+/* Mobile responsive design */
+
+@media (max-width: 600px) {
+  .add-product-page {
+    padding: 20px 12px;
+  }
+
+  .add-product-heading h1 {
+    font-size: 25px;
+  }
+
+  .add-product-form {
+    padding: 20px 16px;
+  }
+
+  .add-product-form h2 {
+    font-size: 21px;
+  }
+
+  .add-product-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .add-product-row .add-product-field {
+    width: 100%;
+  }
+}
+
