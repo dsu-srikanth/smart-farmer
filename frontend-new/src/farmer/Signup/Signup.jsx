@@ -65,7 +65,7 @@ function Signup() {
 
 
                 window.location.href =
-                    "/farmer/login";
+                    "/login";
 
 
             } else {
@@ -160,7 +160,7 @@ function Signup() {
                 </p>
 
 
-                <a href="/farmer/login">
+                <a href="/login">
                     Login
                 </a>
 

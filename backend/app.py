@@ -1,29 +1,45 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-
+import os
 import requests
 
-from store import store_bp
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from db import get_db_connection
+from store import store_bp
 from routes.marketplace import marketplace_bp
 from crop import crop_bp
-
-from werkzeug.security import (
-    generate_password_hash,
-    check_password_hash
-)
 
 
 app = Flask(__name__)
 
 # =====================================================
-# CORS CONFIGURATION
+# CONFIGURATION: VERCEL FRONTEND + RENDER BACKEND
 # =====================================================
 
-CORS(app)
+frontend_urls = os.environ.get(
+    "FRONTEND_URL",
+    "http://localhost:5173,http://127.0.0.1:5173"
+)
+
+allowed_origins = [
+    origin.strip().rstrip("/")
+    for origin in frontend_urls.split(",")
+    if origin.strip()
+]
+
+CORS(
+    app,
+    resources={
+        r"/*": {
+            "origins": allowed_origins
+        }
+    },
+    supports_credentials=False
+)
 
 # =====================================================
-# REGISTER EXISTING BLUEPRINTS
+# REGISTER BLUEPRINTS
 # =====================================================
 
 app.register_blueprint(store_bp)
@@ -32,7 +48,7 @@ app.register_blueprint(crop_bp)
 
 
 # =====================================================
-# HOME
+# HOME API
 # =====================================================
 
 @app.route("/", methods=["GET"])
@@ -43,13 +59,20 @@ def home():
     }), 200
 
 
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({
+        "success": True,
+        "message": "Backend is healthy"
+    }), 200
+
+
 # =====================================================
 # FARMER SIGNUP
 # =====================================================
 
 @app.route("/signup", methods=["POST"])
 def signup():
-
     db = None
     cursor = None
 
@@ -61,7 +84,6 @@ def signup():
         password = data.get("password")
         phone = data.get("phone")
 
-        # Validate required fields.
         if not all([
             isinstance(name, str) and name.strip(),
             isinstance(email, str) and email.strip(),
@@ -138,8 +160,8 @@ def signup():
             "message": "Signup successful"
         }), 201
 
-    except Exception as e:
-        print("SIGNUP ERROR:", e)
+    except Exception as error:
+        print("SIGNUP ERROR:", error)
 
         if db:
             db.rollback()
@@ -163,7 +185,6 @@ def signup():
 
 @app.route("/login", methods=["POST"])
 def login():
-
     db = None
     cursor = None
 
@@ -215,8 +236,9 @@ def login():
         except (ValueError, TypeError):
             password_matches = False
 
-        # Remove this compatibility fallback after migrating any
-        # legacy plaintext passwords to secure password hashes.
+        # Temporary compatibility for existing plaintext passwords.
+        # Remove this fallback after migrating all old passwords
+        # to secure password hashes.
         if not password_matches and stored_password == password:
             password_matches = True
 
@@ -226,7 +248,6 @@ def login():
                 "message": "Invalid email or password"
             }), 401
 
-        # Never return the password or password hash.
         farmer.pop("password", None)
 
         return jsonify({
@@ -235,8 +256,8 @@ def login():
             "farmer": farmer
         }), 200
 
-    except Exception as e:
-        print("LOGIN ERROR:", e)
+    except Exception as error:
+        print("LOGIN ERROR:", error)
 
         return jsonify({
             "success": False,
@@ -257,7 +278,6 @@ def login():
 
 @app.route("/admin/dashboard", methods=["GET"])
 def admin_dashboard():
-
     db = None
     cursor = None
 
@@ -265,27 +285,16 @@ def admin_dashboard():
         db = get_db_connection()
         cursor = db.cursor(dictionary=True)
 
-        # Count registered farmers.
-        cursor.execute(
-            "SELECT COUNT(*) AS total FROM farmer"
-        )
-
+        cursor.execute("SELECT COUNT(*) AS total FROM farmer")
         farmers_count = cursor.fetchone()["total"]
 
-        # Check whether the stores table exists.
-        cursor.execute(
-            "SHOW TABLES LIKE 'stores'"
-        )
-
+        cursor.execute("SHOW TABLES LIKE 'stores'")
         stores_table_exists = cursor.fetchone() is not None
 
         stores_count = 0
 
         if stores_table_exists:
-            cursor.execute(
-                "SELECT COUNT(*) AS total FROM stores"
-            )
-
+            cursor.execute("SELECT COUNT(*) AS total FROM stores")
             stores_count = cursor.fetchone()["total"]
 
         return jsonify({
@@ -294,8 +303,8 @@ def admin_dashboard():
             "total_stores": stores_count
         }), 200
 
-    except Exception as e:
-        print("ADMIN DASHBOARD ERROR:", e)
+    except Exception as error:
+        print("ADMIN DASHBOARD ERROR:", error)
 
         return jsonify({
             "success": False,
@@ -316,7 +325,6 @@ def admin_dashboard():
 
 @app.route("/admin/farmers", methods=["GET"])
 def get_admin_farmers():
-
     db = None
     cursor = None
 
@@ -340,8 +348,8 @@ def get_admin_farmers():
             "total": len(farmers)
         }), 200
 
-    except Exception as e:
-        print("ADMIN FARMERS ERROR:", e)
+    except Exception as error:
+        print("ADMIN FARMERS ERROR:", error)
 
         return jsonify({
             "success": False,
@@ -362,7 +370,6 @@ def get_admin_farmers():
 
 @app.route("/admin/stores", methods=["GET"])
 def get_admin_stores():
-
     db = None
     cursor = None
 
@@ -370,23 +377,15 @@ def get_admin_stores():
         db = get_db_connection()
         cursor = db.cursor(dictionary=True)
 
-        cursor.execute(
-            "SHOW TABLES LIKE 'stores'"
-        )
+        cursor.execute("SHOW TABLES LIKE 'stores'")
 
         if not cursor.fetchone():
             return jsonify({
                 "success": False,
-                "message": (
-                    "Stores table does not exist. "
-                    "Check your store.py database schema."
-                )
+                "message": "Stores table does not exist"
             }), 404
 
-        cursor.execute(
-            "SELECT * FROM stores ORDER BY id DESC"
-        )
-
+        cursor.execute("SELECT * FROM stores ORDER BY id DESC")
         stores = cursor.fetchall()
 
         return jsonify({
@@ -395,8 +394,8 @@ def get_admin_stores():
             "total": len(stores)
         }), 200
 
-    except Exception as e:
-        print("ADMIN STORES ERROR:", e)
+    except Exception as error:
+        print("ADMIN STORES ERROR:", error)
 
         return jsonify({
             "success": False,
@@ -412,8 +411,7 @@ def get_admin_stores():
 
 
 # =====================================================
-# LIVE WEATHER FORECASTING
-# Weather provider: Open-Meteo
+# WEATHER CODES
 # =====================================================
 
 WEATHER_CODES = {
@@ -460,7 +458,6 @@ def get_weather_description(code):
 # =====================================================
 
 def generate_farming_advice(current, daily):
-
     advice = []
 
     temperature = current.get("temperature_2m")
@@ -474,24 +471,20 @@ def generate_farming_advice(current, daily):
         daily.get("precipitation_sum") or []
     )
 
-    # High-temperature advice.
     if temperature is not None and temperature >= 35:
-
         advice.append({
             "title": "High Temperature",
             "message": (
-                "High temperatures are present. Monitor crops "
-                "for heat stress and check their water requirements."
+                "Monitor crops for heat stress and check "
+                "their water requirements."
             ),
             "type": "warning"
         })
 
-    # Rain probability advice.
     if any(
         value is not None and value >= 60
         for value in rain_probabilities[:2]
     ):
-
         advice.append({
             "title": "Rain Alert",
             "message": (
@@ -501,36 +494,30 @@ def generate_farming_advice(current, daily):
             "type": "warning"
         })
 
-    # Rainfall amount advice.
     if any(
         value is not None and value >= 10
         for value in rainfall_values[:2]
     ):
-
         advice.append({
             "title": "Rainfall Expected",
             "message": (
-                "Rainfall is forecast. Check soil moisture "
-                "and drainage before deciding on irrigation."
+                "Check soil moisture and drainage before "
+                "deciding on irrigation."
             ),
             "type": "info"
         })
 
-    # Wind advice.
     if wind_speed is not None and wind_speed >= 20:
-
         advice.append({
             "title": "Wind Advisory",
             "message": (
-                "Wind speeds are elevated. Check pesticide "
-                "labels and local agricultural guidance before spraying."
+                "Check pesticide labels and local agricultural "
+                "guidance before spraying."
             ),
             "type": "warning"
         })
 
-    # Default advice.
     if not advice:
-
         advice.append({
             "title": "General Farming Advice",
             "message": (
@@ -545,7 +532,6 @@ def generate_farming_advice(current, daily):
 
 # =====================================================
 # WEATHER API
-#
 # GET /api/weather?city=Hyderabad
 # GET /api/weather?city=Guntur
 # GET /api/weather?latitude=16.3067&longitude=80.4365
@@ -553,77 +539,53 @@ def generate_farming_advice(current, daily):
 
 @app.route("/api/weather", methods=["GET"])
 def get_weather():
-
-    city = request.args.get(
-        "city",
-        "Hyderabad"
-    ).strip()
+    city = request.args.get("city", "Hyderabad").strip()
 
     latitude = request.args.get("latitude")
     longitude = request.args.get("longitude")
 
-    # Validate location name.
     if len(city) > 100:
         return jsonify({
             "success": False,
-            "message": "Location name is too long."
+            "message": "Location name is too long"
         }), 400
 
-    # Coordinates must be provided together.
     if (latitude is None) != (longitude is None):
         return jsonify({
             "success": False,
-            "message": (
-                "Provide both latitude and longitude."
-            )
+            "message": "Provide both latitude and longitude"
         }), 400
 
     try:
-
-        # ---------------------------------------------
-        # OPTION 1: WEATHER USING COORDINATES
-        # ---------------------------------------------
-
         if latitude is not None and longitude is not None:
-
             try:
                 lat = float(latitude)
                 lon = float(longitude)
-
             except (ValueError, TypeError):
                 return jsonify({
                     "success": False,
-                    "message": "Latitude and longitude must be numbers."
+                    "message": "Latitude and longitude must be numbers"
                 }), 400
 
-            if not (-90 <= lat <= 90):
+            if not -90 <= lat <= 90:
                 return jsonify({
                     "success": False,
-                    "message": (
-                        "Latitude must be between -90 and 90."
-                    )
+                    "message": "Latitude must be between -90 and 90"
                 }), 400
 
-            if not (-180 <= lon <= 180):
+            if not -180 <= lon <= 180:
                 return jsonify({
                     "success": False,
-                    "message": (
-                        "Longitude must be between -180 and 180."
-                    )
+                    "message": "Longitude must be between -180 and 180"
                 }), 400
 
             location_name = city or "Selected Location"
 
-        # ---------------------------------------------
-        # OPTION 2: WEATHER USING CITY OR VILLAGE
-        # ---------------------------------------------
-
         else:
-
             if not city:
                 return jsonify({
                     "success": False,
-                    "message": "Enter a city or village name."
+                    "message": "Enter a city or village name"
                 }), 400
 
             geocoding_response = requests.get(
@@ -638,17 +600,14 @@ def get_weather():
             )
 
             geocoding_response.raise_for_status()
-
             geocoding_data = geocoding_response.json()
-
             locations = geocoding_data.get("results", [])
 
             if not locations:
                 return jsonify({
                     "success": False,
                     "message": (
-                        "Location not found. "
-                        "Try another city or village."
+                        "Location not found. Try another city or village."
                     )
                 }), 404
 
@@ -656,7 +615,6 @@ def get_weather():
 
             lat = location["latitude"]
             lon = location["longitude"]
-
             location_name = location["name"]
 
             if location.get("admin1"):
@@ -665,16 +623,11 @@ def get_weather():
             if location.get("country"):
                 location_name += ", " + location["country"]
 
-        # ---------------------------------------------
-        # REQUEST WEATHER DATA
-        # ---------------------------------------------
-
         weather_response = requests.get(
             "https://api.open-meteo.com/v1/forecast",
             params={
                 "latitude": lat,
                 "longitude": lon,
-
                 "current": (
                     "temperature_2m,"
                     "relative_humidity_2m,"
@@ -685,7 +638,6 @@ def get_weather():
                     "wind_speed_10m,"
                     "wind_direction_10m"
                 ),
-
                 "daily": (
                     "weather_code,"
                     "temperature_2m_max,"
@@ -695,7 +647,6 @@ def get_weather():
                     "sunrise,"
                     "sunset"
                 ),
-
                 "forecast_days": 7,
                 "timezone": "auto"
             },
@@ -703,7 +654,6 @@ def get_weather():
         )
 
         weather_response.raise_for_status()
-
         weather_data = weather_response.json()
 
         current = weather_data.get("current")
@@ -712,149 +662,122 @@ def get_weather():
         if not current or not daily:
             return jsonify({
                 "success": False,
-                "message": "Weather data is unavailable."
+                "message": "Weather data is unavailable"
             }), 502
-
-        # ---------------------------------------------
-        # FORMAT CURRENT WEATHER
-        # ---------------------------------------------
 
         current_weather = {
             "time": current.get("time"),
-
             "temperature": current.get("temperature_2m"),
-
             "feels_like": current.get("apparent_temperature"),
-
             "humidity": current.get("relative_humidity_2m"),
-
             "precipitation": current.get("precipitation"),
-
             "rain": current.get("rain"),
-
             "wind_speed": current.get("wind_speed_10m"),
-
             "wind_direction": current.get("wind_direction_10m"),
-
             "weather_code": current.get("weather_code"),
-
             "description": get_weather_description(
                 current.get("weather_code")
             )
         }
-
-        # ---------------------------------------------
-        # FORMAT SEVEN-DAY FORECAST
-        # ---------------------------------------------
 
         forecast = []
 
         daily_dates = daily.get("time", [])
 
         for index, date in enumerate(daily_dates):
-
             weather_code = daily["weather_code"][index]
 
             forecast.append({
                 "date": date,
-
                 "weather_code": weather_code,
-
-                "description": get_weather_description(
-                    weather_code
-                ),
-
-                "temperature_max": (
-                    daily["temperature_2m_max"][index]
-                ),
-
-                "temperature_min": (
-                    daily["temperature_2m_min"][index]
-                ),
-
+                "description": get_weather_description(weather_code),
+                "temperature_max": daily["temperature_2m_max"][index],
+                "temperature_min": daily["temperature_2m_min"][index],
                 "rain_probability": (
                     daily["precipitation_probability_max"][index]
                 ),
-
-                "rainfall": (
-                    daily["precipitation_sum"][index]
-                ),
-
+                "rainfall": daily["precipitation_sum"][index],
                 "sunrise": daily["sunrise"][index],
-
                 "sunset": daily["sunset"][index]
             })
-
-        # ---------------------------------------------
-        # GENERATE FARMING RECOMMENDATIONS
-        # ---------------------------------------------
 
         farming_advice = generate_farming_advice(
             current_weather,
             daily
         )
 
-        # ---------------------------------------------
-        # RETURN RESPONSE
-        # ---------------------------------------------
-
         return jsonify({
             "success": True,
-
             "location": location_name,
-
             "coordinates": {
                 "latitude": lat,
                 "longitude": lon
             },
-
             "timezone": weather_data.get("timezone"),
-
             "current": current_weather,
-
             "forecast": forecast,
-
             "farming_advice": farming_advice
-
         }), 200
 
     except requests.Timeout:
-
         return jsonify({
             "success": False,
-            "message": (
-                "Weather request timed out. Please try again."
-            )
+            "message": "Weather request timed out. Please try again"
         }), 504
 
-    except requests.RequestException as e:
-
-        print("WEATHER API ERROR:", e)
+    except requests.RequestException as error:
+        print("WEATHER API ERROR:", error)
 
         return jsonify({
             "success": False,
-            "message": (
-                "Unable to connect to the weather service."
-            )
+            "message": "Unable to connect to the weather service"
         }), 502
 
-    except (KeyError, IndexError, TypeError, ValueError) as e:
-
-        print("WEATHER DATA ERROR:", e)
+    except (KeyError, IndexError, TypeError, ValueError) as error:
+        print("WEATHER DATA ERROR:", error)
 
         return jsonify({
             "success": False,
-            "message": "Invalid weather data received."
+            "message": "Invalid weather data received"
         }), 502
 
 
 # =====================================================
-# RUN FLASK SERVER
+# ERROR HANDLERS
+# =====================================================
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        "success": False,
+        "message": "API endpoint not found"
+    }), 404
+
+
+@app.errorhandler(405)
+def method_not_allowed(error):
+    return jsonify({
+        "success": False,
+        "message": "HTTP method not allowed for this endpoint"
+    }), 405
+
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return jsonify({
+        "success": False,
+        "message": "Internal server error"
+    }), 500
+
+
+# =====================================================
+# RUN FLASK LOCALLY
+# Render production start command: gunicorn app:app
 # =====================================================
 
 if __name__ == "__main__":
     app.run(
-        debug=True,
-        host="127.0.0.1",
-        port=5000
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", "5000")),
+        debug=False
     )
