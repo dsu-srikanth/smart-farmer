@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
@@ -12,52 +13,62 @@ function Login() {
   const handleLogin = async (event) => {
     event.preventDefault();
 
+    if (loading) return;
+
     setLoading(true);
 
     try {
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      if (!API_URL) {
+        throw new Error(
+          "Backend URL is missing. Please configure VITE_API_URL."
+        );
+      }
+
       const response = await fetch(
-        "http://127.0.0.1:5000/login",
+        `${API_URL.replace(/\/+$/, "")}/login`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: email,
-            password: password
-          })
+            email: email.trim().toLowerCase(),
+            password: password,
+          }),
         }
       );
 
       const data = await response.json();
 
-      if (response.ok) {
-        // Save farmer information
-        if (data.farmer) {
-          localStorage.setItem(
-            "farmer",
-            JSON.stringify(data.farmer)
-          );
-        }
-
-        alert("Login successful!");
-
-        // Navigate directly to dashboard
-        navigate("/farmer/dashboard", {
-          replace: true
-        });
-      } else {
+      if (!response.ok) {
         alert(
           data.message ||
-          data.error ||
-          "Invalid email or password"
+            data.error ||
+            "Invalid email or password"
+        );
+        return;
+      }
+
+      if (data.farmer) {
+        localStorage.setItem(
+          "farmer",
+          JSON.stringify(data.farmer)
         );
       }
+
+      alert("Login successful!");
+
+      navigate("/farmer/dashboard", {
+        replace: true,
+      });
     } catch (error) {
       console.error("Login error:", error);
 
       alert(
-        "Cannot connect to Flask server. Please start your backend."
+        error.message ||
+          "Cannot connect to the backend. Please try again."
       );
     } finally {
       setLoading(false);
@@ -67,9 +78,7 @@ function Login() {
   return (
     <div className="login-page">
       <div className="login-card">
-
         <h1>🌾 Smart Farming</h1>
-
         <h2>Farmer Login</h2>
 
         <form onSubmit={handleLogin}>
@@ -77,9 +86,8 @@ function Login() {
             type="email"
             placeholder="Enter Email"
             value={email}
-            onChange={(event) =>
-              setEmail(event.target.value)
-            }
+            onChange={(event) => setEmail(event.target.value)}
+            autoComplete="email"
             required
           />
 
@@ -87,16 +95,12 @@ function Login() {
             type="password"
             placeholder="Enter Password"
             value={password}
-            onChange={(event) =>
-              setPassword(event.target.value)
-            }
+            onChange={(event) => setPassword(event.target.value)}
+            autoComplete="current-password"
             required
           />
 
-          <button
-            type="submit"
-            disabled={loading}
-          >
+          <button type="submit" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
@@ -106,7 +110,6 @@ function Login() {
         <Link to="/farmer/signup">
           Create Account
         </Link>
-
       </div>
     </div>
   );

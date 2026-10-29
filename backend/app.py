@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 frontend_urls = os.environ.get(
     "FRONTEND_URL",
-    "http://localhost:5173,http://127.0.0.1:5173"
+    "https://smart-farmer-git-main-srikanth-7d0d.vercel.app,http://localhost:5173,http://127.0.0.1:5173"
 )
 
 allowed_origins = [
@@ -236,11 +236,20 @@ def login():
         except (ValueError, TypeError):
             password_matches = False
 
-        # Temporary compatibility for existing plaintext passwords.
-        # Remove this fallback after migrating all old passwords
-        # to secure password hashes.
-        if not password_matches and stored_password == password:
+        # Temporary compatibility for older plaintext passwords.
+        # Migrate existing passwords to hashes and remove this fallback.
+        if (
+            not password_matches
+            and isinstance(stored_password, str)
+            and stored_password == password
+        ):
             password_matches = True
+
+            cursor.execute(
+                "UPDATE farmer SET password = %s WHERE id = %s",
+                (generate_password_hash(password), farmer["id"])
+            )
+            db.commit()
 
         if not password_matches:
             return jsonify({
@@ -533,7 +542,6 @@ def generate_farming_advice(current, daily):
 # =====================================================
 # WEATHER API
 # GET /api/weather?city=Hyderabad
-# GET /api/weather?city=Guntur
 # GET /api/weather?latitude=16.3067&longitude=80.4365
 # =====================================================
 
@@ -702,7 +710,7 @@ def get_weather():
             })
 
         farming_advice = generate_farming_advice(
-            current_weather,
+            current,
             daily
         )
 
