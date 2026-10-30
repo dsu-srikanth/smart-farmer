@@ -19,48 +19,64 @@ function Signup() {
     setLoading(true);
 
     try {
+      // Get backend URL
       const API_URL = import.meta.env.VITE_API_URL;
 
       if (!API_URL) {
-        throw new Error(
-          "Backend URL is missing. Please configure VITE_API_URL."
-        );
+        throw new Error("Backend URL is missing. Check Vercel settings.");
       }
 
+      // Connect to Flask signup API
       const response = await fetch(
         `${API_URL.replace(/\/+$/, "")}/signup`,
         {
           method: "POST",
+
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Accept": "application/json"
           },
+
           body: JSON.stringify({
             name: name.trim(),
             email: email.trim().toLowerCase(),
-            password,
+            password: password,
             phone: phone.trim()
           })
         }
       );
 
-      const data = await response.json();
+      // Read response safely
+      const responseText = await response.text();
 
-      if (!response.ok) {
-        alert(
-          data.message ||
-          data.error ||
-          "Signup failed. Please try again."
+      let data;
+
+      try {
+        data = JSON.parse(responseText);
+      } catch {
+        console.error("Backend returned HTML or invalid JSON:", responseText);
+
+        throw new Error(
+          "Backend returned an invalid response. Check Render URL and Flask logs."
         );
-        return;
+      }
+
+      // Check signup response
+      if (!response.ok) {
+        throw new Error(
+          data.message || data.error || "Signup failed."
+        );
       }
 
       alert(data.message || "Signup successful!");
 
+      // Clear form
       setName("");
       setEmail("");
       setPassword("");
       setPhone("");
 
+      // Navigate to login
       navigate("/login", {
         replace: true
       });
@@ -69,8 +85,7 @@ function Signup() {
       console.error("Signup error:", error);
 
       alert(
-        error.message ||
-        "Cannot connect to the backend. Please try again."
+        error.message || "Cannot connect to backend."
       );
 
     } finally {
@@ -80,12 +95,15 @@ function Signup() {
 
   return (
     <div className="signup-page">
+
       <div className="signup-card">
+
         <h1>🌾 Smart Farming</h1>
 
         <h2>Farmer Signup</h2>
 
         <form onSubmit={handleSignup}>
+
           <input
             type="text"
             placeholder="Enter Name"
@@ -129,6 +147,7 @@ function Signup() {
           <button type="submit" disabled={loading}>
             {loading ? "Creating Account..." : "Signup"}
           </button>
+
         </form>
 
         <p>Already have an account?</p>
@@ -136,7 +155,9 @@ function Signup() {
         <Link to="/login">
           Login
         </Link>
+
       </div>
+
     </div>
   );
 }

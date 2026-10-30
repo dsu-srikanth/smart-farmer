@@ -32,23 +32,36 @@ function Login() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Accept": "application/json",
           },
           body: JSON.stringify({
             email: email.trim().toLowerCase(),
-            password: password,
+            password,
           }),
         }
       );
 
-      const data = await response.json();
+      // Read response safely
+      const responseText = await response.text();
+
+      let data;
+
+      try {
+        data = JSON.parse(responseText);
+      } catch {
+        console.error("Invalid backend response:", responseText);
+
+        throw new Error(
+          "Backend returned invalid data. Check your Render URL and backend logs."
+        );
+      }
 
       if (!response.ok) {
-        alert(
+        throw new Error(
           data.message ||
-            data.error ||
-            "Invalid email or password"
+          data.error ||
+          "Invalid email or password"
         );
-        return;
       }
 
       if (data.farmer) {
@@ -58,18 +71,20 @@ function Login() {
         );
       }
 
-      alert("Login successful!");
+      alert(data.message || "Login successful!");
 
       navigate("/farmer/dashboard", {
         replace: true,
       });
+
     } catch (error) {
       console.error("Login error:", error);
 
       alert(
         error.message ||
-          "Cannot connect to the backend. Please try again."
+        "Cannot connect to the backend. Please try again."
       );
+
     } finally {
       setLoading(false);
     }
@@ -78,10 +93,12 @@ function Login() {
   return (
     <div className="login-page">
       <div className="login-card">
+
         <h1>🌾 Smart Farming</h1>
         <h2>Farmer Login</h2>
 
         <form onSubmit={handleLogin}>
+
           <input
             type="email"
             placeholder="Enter Email"
@@ -103,6 +120,7 @@ function Login() {
           <button type="submit" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
+
         </form>
 
         <p>Don't have an account?</p>
@@ -110,6 +128,7 @@ function Login() {
         <Link to="/farmer/signup">
           Create Account
         </Link>
+
       </div>
     </div>
   );
